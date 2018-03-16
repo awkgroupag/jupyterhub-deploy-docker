@@ -82,4 +82,5 @@ with open(os.path.join(pwd, 'userlist')) as f:
             continue
         name = parts[0]
         if len(parts) > 1 and parts[1] == 'admin':
+            print('Adding admin user %s' % name)
             admin.add(name)
