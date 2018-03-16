@@ -78,6 +78,8 @@ with open(os.path.join(pwd, 'userlist')) as f:
         if not line:
             continue
         parts = line.split()
+        print parts
+        print type(parts)
         name = parts[0]
         if len(parts) > 1 and parts[1] == 'admin':
             admin.add(name)
