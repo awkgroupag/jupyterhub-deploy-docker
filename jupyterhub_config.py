@@ -58,7 +58,7 @@ c.JupyterHub.ssl_cert = os.environ['SSL_CERT']
 # c.JupyterHub.authenticator_class = 'jupyterhub.auth.PAMAuthenticator'
 c.JupyterHub.authenticator_class = 'ldapauthenticator.LDAPAuthenticator'
 c.LDAPAuthenticator.server_address = os.environ.get('LDAP_ADDRESS')
-c.LDAPAuthenticator.server_port = os.environ.get('LDAP_PORT')
+c.LDAPAuthenticator.server_port = int(os.environ.get('LDAP_PORT'))
 c.LDAPAuthenticator.bind_dn_template = []
 c.LDAPAuthenticator.use_ssl = os.environ.get('LDAP_USE_SSL') == 'True'
 
