@@ -1,9 +1,28 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG JUPYTERHUB_VERSION
-FROM jupyterhub/jupyterhub-onbuild:$JUPYTERHUB_VERSION
+ARG SSH_PRIVATE_KEY
+# this is our first build stage, it will not persist in the final image
+FROM jupyterhub/jupyterhub-onbuild:$JUPYTERHUB_VERSION as intermediate
 
-# Install dockerspawner, oauth, postgres
+RUN mkdir /root/.ssh/
+RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+# make sure your domain is accepted
+RUN touch /root/.ssh/known_hosts
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+
+# Install dockerspawner from custom AWK repo
+RUN git clone https://github.com/awkgroupag/dockerspawner.git
+
+# Second stage (avoid SSH_PRIVATE_KEY leak)
+FROM jupyterhub/jupyterhub-onbuild:$JUPYTERHUB_VERSION
+# copy the repository form the previous image
+COPY --from=intermediate /dockerspawner /srv/custom-dockerspawner
+# Install using pip
+RUN cd /srv/custom-dockerspawner && /opt/conda/bin/pip install
+RUN rm -f -r /srv/custom-dockerspawner
+
+# Install oauth, postgres, any other package
 RUN /opt/conda/bin/conda install -yq psycopg2=2.7 && \
     /opt/conda/bin/conda clean -tipsy && \
     /opt/conda/bin/pip install --no-cache-dir \
@@ -16,15 +35,5 @@ COPY ./secrets/jupyterhub.crt $SSL_CERT
 COPY ./secrets/jupyterhub.key $SSL_KEY
 RUN chmod 700 /srv/jupyterhub/secrets && \
     chmod 600 /srv/jupyterhub/secrets/*
-
-# Need the private key for the GitHub private repo; force git to use that key
-ENV GIT_SSH_KEY /srv/jupyterhub/secrets/github_repo.key
-ENV GIT_SSH_COMMAND "ssh -v -i ${GIT_SSH_KEY}"
-COPY ./secrets/github_repo.key $GIT_SSH_KEY
-# SSH needs chmod 400!
-RUN chmod 400 $GIT_SSH_KEY
-# Install dockerspawner from custom AWK repo
-RUN /opt/conda/bin/pip install --no-cache-dir \
-        git+ssh://git@github.com/awkgroupag/jupyterhub-deploy-docker.git@custom-spawner
 
 COPY ./userlist /srv/jupyterhub/userlist
