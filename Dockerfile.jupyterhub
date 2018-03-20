@@ -18,10 +18,11 @@ RUN chmod 700 /srv/jupyterhub/secrets && \
     chmod 600 /srv/jupyterhub/secrets/*
 
 # Need the private key for the GitHub private repo; force git to use that key
-ENV GIT_SSH_COMMAND "ssh -i /srv/jupyterhub/secrets/github_repo.key"
-COPY ./secrets/github_repo.key /srv/jupyterhub/secrets/github_repo.key
+ENV GIT_SSH_KEY /srv/jupyterhub/secrets/github_repo.key
+ENV GIT_SSH_COMMAND "ssh -v -i ${GIT_SSH_KEY}"
+COPY ./secrets/github_repo.key $GIT_SSH_KEY
 # SSH needs chmod 400!
-RUN chmod 400 /srv/jupyterhub/secrets/github_repo.key
+RUN chmod 400 $GIT_SSH_KEY
 # Install dockerspawner from custom AWK repo
 RUN /opt/conda/bin/pip install --no-cache-dir \
         git+ssh://git@github.com/awkgroupag/jupyterhub-deploy-docker.git@custom-spawner
