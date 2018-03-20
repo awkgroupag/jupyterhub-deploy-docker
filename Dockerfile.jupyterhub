@@ -19,7 +19,7 @@ FROM jupyterhub/jupyterhub-onbuild:$JUPYTERHUB_VERSION
 # copy the repository form the previous image
 COPY --from=intermediate /srv/custom-dockerspawner /srv/custom-dockerspawner
 # Install using pip
-RUN cd /srv/custom-dockerspawner && /opt/conda/bin/pip install
+RUN cd /srv/custom-dockerspawner && /opt/conda/bin/pip install .
 RUN rm -f -r /srv/custom-dockerspawner
 
 # Install oauth, postgres, any other package
