@@ -1,12 +1,12 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG JUPYTERHUB_VERSION
-ARG SSH_PRIVATE_KEY
 # this is our first build stage, it will not persist in the final image
 FROM jupyterhub/jupyterhub-onbuild:$JUPYTERHUB_VERSION as intermediate
 
 RUN mkdir /root/.ssh/
-RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+COPY ./secrets/github_repo.key /root/.ssh/id_rsa
+RUN chmod 400 /root/.ssh/id_rsa
 # make sure your domain is accepted
 RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
@@ -14,7 +14,7 @@ RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 # Install dockerspawner from custom AWK repo
 RUN git clone https://github.com/awkgroupag/dockerspawner.git
 
-# Second stage (avoid SSH_PRIVATE_KEY leak)
+# Second stage (avoid leak of ssh key above)
 FROM jupyterhub/jupyterhub-onbuild:$JUPYTERHUB_VERSION
 # copy the repository form the previous image
 COPY --from=intermediate /dockerspawner /srv/custom-dockerspawner
