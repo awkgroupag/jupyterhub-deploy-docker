@@ -32,6 +32,13 @@ secrets/jupyterhub.key:
 	@echo "Need an SSL key in secrets/jupyterhub.key"
 	@exit 1
 
+secrets/github_repo.key:
+	@echo "Need an SSL key key for the GitHub private repo in secrets/github_repo.key"
+	@echo ""
+	@echo "See:"
+	@echo "https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"
+	@exit 1
+
 userlist:
 	@echo "Add usernames, one per line, to ./userlist, such as:"
 	@echo "    zoe admin"
