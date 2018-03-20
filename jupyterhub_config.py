@@ -18,8 +18,8 @@ c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
 # Specify the different Docker images the user can start
 # Key: text to be displayed to the user. Values: exact Docker image
 c.DockerSpawner.image_whitelist = {
-    'Vanilla Datascience-Notebook': 'jupyter/datascience-notebook:30f16d52126f',
-    'Ham Textmining': 'awk/textmining:1.0.0'
+    'Vanilla Datascience-Notebook (30f16d52126f)': 'jupyter/datascience-notebook:30f16d52126f',
+    'AWK Textmining 1.0.0': 'awk/textmining:1.0.0'
 }
 # JupyterHub requires a single-user instance of the Notebook server, so we
 # default to using the `start-singleuser.sh` script included in the
