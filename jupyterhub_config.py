@@ -61,6 +61,8 @@ c.LDAPAuthenticator.server_address = os.environ.get('LDAP_ADDRESS')
 c.LDAPAuthenticator.server_port = int(os.environ.get('LDAP_PORT'))
 c.LDAPAuthenticator.bind_dn_template = os.environ.get('LDAP_BIND_DN_TEMPLATE')
 c.LDAPAuthenticator.use_ssl = os.environ.get('LDAP_USE_SSL') == 'True'
+# Also allow capital usernames
+c.LDAPAuthenticator.valid_username_regex = '^[a-zA-Z][.a-z0-9_-]*$'
 
 
 # Persist hub data on volume mounted inside container
