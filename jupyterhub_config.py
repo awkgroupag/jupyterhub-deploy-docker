@@ -21,7 +21,7 @@ c.JupyterHub.last_activity_interval = 5 * 60
 # Specify the different Docker images the user can start
 # Key: text to be displayed to the user. Values: exact Docker image
 c.DockerSpawner.image_whitelist = {
-    'Vanilla Datascience-Notebook (30f16d52126f)': 'jupyter/datascience-notebook:30f16d52126f',
+    'Vanilla Datascience-Notebook (8d9388cac562, 02.04.18)': 'jupyter/datascience-notebook:8d9388cac562',
     'AWK Textmining 1.0.0': 'awk/textmining:1.0.0'
 }
 # JupyterHub requires a single-user instance of the Notebook server, so we
