@@ -98,6 +98,7 @@ c.JupyterHub.services = [
 ]
 
 # Whitlelist users and admins
+c.Authenticator.whitelist = whitelist = set()
 c.Authenticator.admin_users = admin = set()
 c.JupyterHub.admin_access = True
 pwd = os.path.dirname(__file__)
@@ -109,6 +110,7 @@ with open(os.path.join(pwd, 'userlist')) as f:
         if not parts:
             continue
         name = parts[0]
+        whitelist.add(name)
         if len(parts) > 1 and parts[1] == 'admin':
             print('Adding admin user %s' % name)
             admin.add(name)
