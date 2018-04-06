@@ -12,6 +12,9 @@ c = get_config()
 
 # Spawn single-user servers as Docker containers
 c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
+# Interval (in seconds) at which to update last-activity timestamps
+# Needed by culling service. Default: 5 minutes
+c.JupyterHub.last_activity_interval = 5 * 60
 # Spawn containers from this image
 # c.DockerSpawner.image = os.environ['DOCKER_NOTEBOOK_IMAGE']
 
@@ -75,6 +78,16 @@ c.JupyterHub.db_url = 'postgresql://postgres:{password}@{host}/{db}'.format(
     password=os.environ['POSTGRES_PASSWORD'],
     db=os.environ['POSTGRES_DB'],
 )
+
+# Add culling service for broken/idle Jupyter notebooks. Notebooks will be
+# force-shutdown after timeout (in seconds)
+c.JupyterHub.services = [
+    {
+        'name': 'cull-idle',
+        'admin': True,
+        'command': 'python cull_idle_servers.py --timeout=21600'.split(),
+    }
+]
 
 # Whitlelist users and admins
 c.Authenticator.admin_users = admin = set()
