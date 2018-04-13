@@ -47,7 +47,7 @@ c.DockerSpawner.notebook_dir = notebook_dir
 # notebook directory in the container
 c.DockerSpawner.volumes = { 'jupyterhub-user-{username}': notebook_dir }
 # Memory / RAM limit per container
-c.DockerSpawner.mem_limit = '7G'
+c.DockerSpawner.mem_limit = '16G'
 # volume_driver is no longer a keyword argument to create_container()
 # c.DockerSpawner.extra_create_kwargs.update({ 'volume_driver': 'local' })
 # Remove containers once they are stopped
