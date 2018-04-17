@@ -54,6 +54,10 @@ c.DockerSpawner.mem_limit = '16G'
 c.DockerSpawner.remove_containers = True
 # For debugging arguments passed to spawned containers
 c.DockerSpawner.debug = True
+# Set further container settings such as granting users admin rights
+c.DockerSpawner.environment = {
+    'GRANT_SUDO': '1',
+}
 
 # User containers will access hub by container name on the Docker network
 c.JupyterHub.hub_ip = 'jupyterhub'
