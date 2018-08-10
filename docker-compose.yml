@@ -26,7 +26,7 @@ services:
       args:
         JUPYTERHUB_VERSION: ${JUPYTERHUB_VERSION}
     restart: always
-    image: jupyterhub
+    image: jupyterhub:${JUPYTERHUB_VERSION}
     container_name: jupyterhub
     volumes:
       # Bind Docker socket on the host so we can connect to the daemon from
