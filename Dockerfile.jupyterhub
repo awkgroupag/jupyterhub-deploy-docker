@@ -28,7 +28,7 @@ RUN rm -f -r /srv/custom-dockerspawner
 # Update conda itself
 RUN /opt/conda/bin/conda install -yq \
     conda==4.5.9 \
-    conda-env==2.6.0-1 \
+    conda-env==2.6.0 \
     openssl==1.0.2o \
     ca-certificates==2018.03.07-0
 
