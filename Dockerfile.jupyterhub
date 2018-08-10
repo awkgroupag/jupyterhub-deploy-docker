@@ -33,7 +33,7 @@ RUN /opt/conda/bin/conda install -yq \
     conda==4.5.9 \
     conda-env==2.6.0 \
     openssl==1.0.2o \
-    pip==10.0.1 \
+    pip==10.0.1 && \
     # Main packages we need
     /opt/conda/bin/conda install -yq \
         # Main packages we want
