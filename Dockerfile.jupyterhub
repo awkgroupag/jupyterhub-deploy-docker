@@ -37,7 +37,6 @@ RUN /opt/conda/bin/conda config --add channels conda-forge && \
     websocket-client==0.48.0 \
     ldap3==2.5.1 \
     pyasn1==0.4.4 \
-    escapism==0.0.1 \
     pip==10.0.1 && \
     # Main packages we need
     /opt/conda/bin/conda install -yq \
