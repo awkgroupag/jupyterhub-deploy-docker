@@ -35,7 +35,7 @@ RUN /opt/conda/bin/conda config --add channels conda-forge && \
         pip==10.0.1 \
         # Dependencies of the above
         libgcc-ng==7.2.0 \
-        pycosat==0.6.1 && \
+        pycosat==0.6.3 && \
     # Install DIRECT dependencies for modules we need
     /opt/conda/bin/conda install -yq \
         # Jupyterhub dependency
