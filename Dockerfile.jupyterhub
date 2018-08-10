@@ -11,6 +11,22 @@ RUN chmod 400 /root/.ssh/id_rsa
 RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
+RUN /opt/conda/bin/conda install -yq \
+    # Update environment
+    conda==4.5.9 \
+    conda-env==2.6.0 \
+    openssl==1.0.2o \
+    ca-certificates==2018.4.16 \
+    pip==10.0.1 && \
+    # Main packages we need
+    /opt/conda/bin/conda install -yq \
+        # Main packages we want
+        psycopg2=2.7.5 && \
+    /opt/conda/bin/conda clean -tipsy && \
+
+# Update git
+RUN yum install git==1.8.3.1
+
 # Install dockerspawner from custom AWK repo (ssh credentials needed)
 RUN git clone https://github.com/awkgroupag/dockerspawner.git /srv/custom-dockerspawner && \
     cd /srv/custom-dockerspawner && \
@@ -24,21 +40,6 @@ COPY --from=intermediate /srv/custom-dockerspawner /srv/custom-dockerspawner
 # Install using pip
 RUN cd /srv/custom-dockerspawner && /opt/conda/bin/pip install --no-cache-dir .
 RUN rm -f -r /srv/custom-dockerspawner
-
-# Update conda itself
-RUN /opt/conda/bin/conda install -yq \
-    conda==4.5.9 \
-    conda-env==2.6.0 \
-    openssl==1.0.2o \
-    ca-certificates==2018.03.07-0
-
-# Install main packages
-RUN /opt/conda/bin/conda install -yq \
-    # Main packages we want
-    psycopg2=2.7.5
-
-# Clean up conda
-RUN /opt/conda/bin/conda clean -tipsy 
 
 # Install using pip
 RUN /opt/conda/bin/pip install --no-cache-dir \
