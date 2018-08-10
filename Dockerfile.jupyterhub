@@ -12,8 +12,8 @@ RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
 # Install dockerspawner from custom AWK repo (ssh credentials needed)
-RUN git clone https://github.com/awkgroupag/dockerspawner.git /srv/custom-dockerspawner &&
-    cd /srv/custom-dockerspawner &&
+RUN git clone https://github.com/awkgroupag/dockerspawner.git /srv/custom-dockerspawner && \
+    cd /srv/custom-dockerspawner && \
     # Pin the AWK dockerspawner version with git commit id
     git checkout 2a6954d83fcd3b399dd5d732ed3802247090eebf
 
