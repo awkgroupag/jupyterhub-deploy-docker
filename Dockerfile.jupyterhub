@@ -31,7 +31,7 @@ COPY --from=intermediate /srv/custom-dockerspawner /srv/custom-dockerspawner
 RUN /opt/conda/bin/conda install -yq \
     # Update environment
     conda==4.5.9 \
-    docker-py==3.5.0 \
+    docker==3.5.0 \
     docker-pycreds==0.3.0 \
     websocket-client==0.48.0 \
     ldap3==2.5.1 \
