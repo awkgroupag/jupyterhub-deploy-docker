@@ -12,7 +12,7 @@ RUN chmod 400 /root/.ssh/id_rsa
 RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-# Update git
+# Update git. Theoretically, the version should not matter
 RUN apt-get update -yq && \
     apt-get install -yq --no-install-recommends apt-utils=1.0.9.8.4 &&  \
     apt-get install -yq --no-install-recommends git=1:2.1.4-2.1+deb8u6
@@ -29,19 +29,40 @@ FROM jupyterhub/jupyterhub-onbuild:$JUPYTERHUB_VERSION
 COPY --from=intermediate /srv/custom-dockerspawner /srv/custom-dockerspawner
 
 RUN /opt/conda/bin/conda config --add channels conda-forge && \
-    # Update environment
+    # Update our python environment
     /opt/conda/bin/conda install -yq \
         conda==4.5.9 \
-        pip==10.0.1 && \
-    # Install DIRECT dependencies
+        pip==10.0.1 \
+        # Dependencies of the above
+        libgcc-ng==7.2.0 \
+        pycosat==0.6.1 && \
+    # Install DIRECT dependencies for modules we need
     /opt/conda/bin/conda install -yq \
-        psycopg2==2.7.5 && \
+        # Jupyterhub dependency
+        psycopg2==2.7.5 \
+        # And its dependencies again
+        certifi==2018.4.16 \
+        ca-certificates==2018.4.16 \
+        libpq==9.6.3 \
+        krb5==1.14.6 \
+        openssl==1.0.2o && \
+    # Dependencies for jupyterhub-ldapauthenticator
+    /opt/conda/bin/conda install -yq \
+        ldap3==2.5.1 \
+        pyasn1==0.4.4 && \
+    # Dependencies for dockerspawner
+    /opt/conda/bin/conda install -yq \
+        docker-py==3.5.0 \
+        docker-pycreds==0.3.0 \
+        websocket-client-0.48.0 && \
     # Clean up
     /opt/conda/bin/conda clean -tipsy
 
 # Install using pip (installing ldapauthenticator using conda will include dependency jupyterhub)
 RUN /opt/conda/bin/pip install --no-cache-dir \
-        jupyterhub-ldapauthenticator==1.2.2
+        jupyterhub-ldapauthenticator=1.2.2 \
+        # Dependency for dockerspawner
+        escapism=1.0.0
 
 # Install our custom dockerspawner using pip
 RUN cd /srv/custom-dockerspawner && \
