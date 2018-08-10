@@ -31,8 +31,12 @@ COPY --from=intermediate /srv/custom-dockerspawner /srv/custom-dockerspawner
 RUN /opt/conda/bin/conda install -yq \
     # Update environment
     conda==4.5.9 \
-    conda-env==2.6.0 \
-    openssl==1.0.2o \
+    docker-py==3.5.0 \
+    docker-pycreds==0.3.0 \
+    websocket-client==0.48.0 \
+    ldap3==2.5.1 \
+    pyasn1==0.4.4 \
+    escapism==0.0.1 \
     pip==10.0.1 && \
     # Main packages we need
     /opt/conda/bin/conda install -yq \
