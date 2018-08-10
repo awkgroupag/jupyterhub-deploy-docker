@@ -35,15 +35,12 @@ RUN /opt/conda/bin/conda config --add channels conda-forge && \
         pip==10.0.1 && \
     # Install DIRECT dependencies
     /opt/conda/bin/conda install -yq \
-        psycopg2==2.7.5 && \
+        psycopg2==2.7.5 \
+        jupyterhub-ldapauthenticator==1.2.2
     # Clean up
     /opt/conda/bin/conda clean -tipsy
 
-# Install using pip
-RUN /opt/conda/bin/pip install --no-cache-dir \
-        jupyterhub-ldapauthenticator==1.1
-
-# Install using pip
+# Install our custom dockerspawner using pip
 RUN cd /srv/custom-dockerspawner && \
     /opt/conda/bin/pip install --no-cache-dir . && \
     cd / \
