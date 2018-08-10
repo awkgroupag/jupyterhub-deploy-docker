@@ -13,7 +13,7 @@ RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
 # Update git
-RUN apt-get update -yq && apt-get install -yq git=1:2.1.4-2.1+deb8u6
+RUN apt-get update -yq && apt-get install -yq --no-install-recommends apt-utils git=1:2.1.4-2.1+deb8u6
 
 # Install dockerspawner from custom AWK repo (ssh credentials needed)
 RUN git clone https://github.com/awkgroupag/dockerspawner.git /srv/custom-dockerspawner && \
