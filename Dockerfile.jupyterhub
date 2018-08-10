@@ -14,7 +14,7 @@ RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
 # Update git. Theoretically, the version should not matter
 RUN apt-get update -yq && \
-    apt-get install -yq --no-install-recommends git=1:2.1.4-2.1+deb8u6
+    apt-get install -yq --no-install-recommends git
 
 # Install dockerspawner from custom AWK repo (ssh credentials needed)
 RUN git clone https://github.com/awkgroupag/dockerspawner.git /srv/custom-dockerspawner && \
