@@ -33,6 +33,9 @@ RUN /opt/conda/bin/conda config --add channels conda-forge && \
     /opt/conda/bin/conda install -yq \
         conda==4.5.9 \
         pip==10.0.1 && \
+    # Install DIRECT dependencies
+    /opt/conda/bin/conda install -yq \
+        psycopg2==2.7.5 && \
     # Clean up
     /opt/conda/bin/conda clean -tipsy
 
