@@ -92,13 +92,13 @@ c.JupyterHub.db_url = 'postgresql://postgres:{password}@{host}/{db}'.format(
 
 # Add culling service for broken/idle Jupyter notebooks. Notebooks will be
 # force-shutdown after timeout (in seconds)
-c.JupyterHub.services = [
-    {
-        'name': 'cull-idle',
-        'admin': True,
-        'command': 'python cull_idle_servers.py --timeout=86400'.split(),
-    }
-]
+# c.JupyterHub.services = [
+#     {
+#         'name': 'cull-idle',
+#         'admin': True,
+#         'command': 'python cull_idle_servers.py --timeout=86400'.split(),
+#     }
+# ]
 
 # Whitlelist users and admins
 c.Authenticator.whitelist = whitelist = set()
