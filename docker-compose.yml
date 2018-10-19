@@ -16,6 +16,11 @@ services:
       - secrets/postgres.env
     volumes:
       - "db:${DB_VOLUME_CONTAINER}"
+    # If we're upgrading the DB, make sure to remove the comments below. Make a backup, obviously ;-)
+    # Docker error:
+    #  Found database schema version. Backup your database and run `jupyterhub upgrade-db` to upgrade to the latest schema.
+    db:
+      upgrade: true
 
   hub:
     depends_on:
