@@ -22,7 +22,8 @@ c.JupyterHub.last_activity_interval = 5 * 60
 # Key: text to be displayed to the user. Values: exact Docker image
 c.DockerSpawner.image_whitelist = {
     'Vanilla Datascience-Notebook (8d9388cac562, 02.04.18)': 'jupyter/datascience-notebook:8d9388cac562',
-    'AWK Textmining 00a87e1 (17.04.18)': 'awk/textmining:00a87e1'
+    'AWK Textmining aa3ac50 (19.10.18)': 'awk/textmining:aa3ac50',
+    'AWK Textmining 00a87e1 (17.04.18)': 'awk/textmining:00a87e1',
 }
 # JupyterHub requires a single-user instance of the Notebook server, so we
 # default to using the `start-singleuser.sh` script included in the
