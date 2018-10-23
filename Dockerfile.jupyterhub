@@ -12,10 +12,6 @@ RUN chmod 400 /root/.ssh/id_rsa
 RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-# Update git. Theoretically, the version should not matter
-# RUN apt-get update -yq && \
-#    apt-get install -yq --no-install-recommends git=1:2.17.1-1ubuntu0.1
-
 # Install dockerspawner from custom AWK repo (ssh credentials needed)
 RUN git clone https://github.com/awkgroupag/dockerspawner.git /srv/custom-dockerspawner && \
     cd /srv/custom-dockerspawner && \
@@ -30,12 +26,8 @@ COPY --from=intermediate /srv/custom-dockerspawner /srv/custom-dockerspawner
 RUN /opt/conda/bin/conda config --add channels conda-forge && \
     # Update our python environment
     /opt/conda/bin/conda install -yq \
-        conda==4.5.9 \
-        pip==10.0.1 \
-        # Dependencies of the above
-        libgcc-ng==7.2.0 \
-        openssl==1.0.2o \
-        pycosat==0.6.3 && \
+        conda==4.5.11 \
+        pip==18.1 && \
     # Install DIRECT dependencies for modules we need
     /opt/conda/bin/conda install -yq \
         # Jupyterhub dependency
